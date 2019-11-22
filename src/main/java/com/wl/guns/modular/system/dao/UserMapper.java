@@ -15,9 +15,10 @@
  */
 package com.wl.guns.modular.system.dao;
 
-import com.wl.guns.modular.system.model.User;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
+import com.wl.guns.modular.system.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -57,4 +58,20 @@ public interface UserMapper extends BaseMapper<User> {
      * 通过账号获取用户
      */
     User getByAccount(@Param("account") String account);
+
+    /**
+     * @description 根据条件查询user数量
+     * @author 王柳
+     * @date 2019/11/22 11:42
+     * @params [name, beginTime, endTime]
+     */
+    Integer selectListCount(@Param("name") String name, @Param("beginTime") String beginTime, @Param("endTime") String endTime);
+
+    /**
+     * @description 根据条件查询要导出的user信息
+     * @author 王柳
+     * @date 2019/11/22 11:42
+     * @params [page, name, beginTime, endTime]
+     */
+    List<Map<String, Object>> selectPoiExport(Pagination page, @Param("name") String name, @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 }

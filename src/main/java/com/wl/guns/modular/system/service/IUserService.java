@@ -19,6 +19,9 @@ import com.wl.guns.modular.system.model.User;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import com.baomidou.mybatisplus.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -57,4 +60,20 @@ public interface IUserService extends IService<User> {
      */
     User getByAccount(String account);
 
+    /**
+     * @description  POI导出
+     * @author 王柳
+     * @date 2019/11/22 12:56
+     * @params [request, response]
+     */
+    void exportPoi(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+    /**
+     * @description  POI导入，写入数据
+     * @author 王柳
+     * @date 2019/11/22 12:56
+     * @params [request, response]
+     * @return
+     */
+    List<User> writeExelData(InputStream is);
 }

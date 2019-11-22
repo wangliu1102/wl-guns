@@ -15,6 +15,13 @@
  */
 package com.wl.guns.modular.system.controller;
 
+import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.core.datascope.DataScope;
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.wl.guns.config.properties.GunsProperties;
 import com.wl.guns.core.common.annotion.BussinessLog;
 import com.wl.guns.core.common.annotion.Permission;
@@ -26,27 +33,27 @@ import com.wl.guns.core.common.exception.BizExceptionEnum;
 import com.wl.guns.core.log.LogObjectHolder;
 import com.wl.guns.core.shiro.ShiroKit;
 import com.wl.guns.core.shiro.ShiroUser;
+import com.wl.guns.core.util.poi_excel.ExcelConstant;
 import com.wl.guns.modular.system.factory.UserFactory;
 import com.wl.guns.modular.system.model.User;
 import com.wl.guns.modular.system.service.IUserService;
 import com.wl.guns.modular.system.transfer.UserDto;
 import com.wl.guns.modular.system.warpper.UserWarpper;
-import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.datascope.DataScope;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
-import cn.stylefeng.roses.core.util.ToolUtil;
-import cn.stylefeng.roses.kernel.model.exception.ServiceException;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.naming.NoPermissionException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +67,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/mgr")
+@Slf4j
 public class UserMgrController extends BaseController {
 
     private static String PREFIX = "/system/user/";
@@ -383,5 +391,86 @@ public class UserMgrController extends BaseController {
             throw new ServiceException(BizExceptionEnum.NO_PERMITION);
         }
 
+    }
+
+    /**
+     * @description POI导出
+     * @author 王柳
+     * @date 2019/11/22 9:41
+     * @params [request, response]
+     */
+    @RequestMapping("/exportPoi")
+    public void exportPoi(HttpServletRequest request, HttpServletResponse response) {
+        getSession().setAttribute(ExcelConstant.EXPORT_FLAG, "true");
+
+        try {
+            userService.exportPoi(request, response);
+        } catch (Exception e) {
+            log.error("POI导出Excel异常{}", e.getMessage());
+        }
+    }
+
+    /**
+     * @description 判断是否POI导出excel是否完成，用于loading的显示和隐藏
+     * @author 王柳
+     * @date 2019/11/22 9:45
+     * @params []
+     */
+    @RequestMapping("/isPoiExport")
+    @ResponseBody
+    public Object isExport() {
+        JSONObject jsonObject = new JSONObject();
+        if (getSession().getAttribute(ExcelConstant.EXPORT_FLAG) == null) {
+            jsonObject.put(ExcelConstant.RESULT_CODE, 0);
+        } else {
+            jsonObject.put(ExcelConstant.RESULT_CODE, -1);
+        }
+        return jsonObject;
+    }
+
+    /**
+     * 跳转到POI导入页面
+     */
+    @RequestMapping("/importPoiExcel")
+    public String importPoiExcel() {
+        return PREFIX + "user_import_poi_excel.html";
+    }
+
+    /**
+     * @description POI导入
+     * @author 王柳
+     * @date 2019/11/22 9:51
+     * @params [file]
+     */
+    @RequestMapping("/importPoi")
+    @ResponseBody
+    public Object importPoi(@RequestParam("file") MultipartFile file) {
+        //上传标志
+        String flag = ExcelConstant.IMPORT_NULL;
+
+        // 判断文件是否为空
+        if (!file.isEmpty()) {
+            try {
+                //获取输入流
+                InputStream is = file.getInputStream();
+                List<User> userList = userService.writeExelData(is);
+                if (userList.size() == 0) {
+                    flag = ExcelConstant.IMPORT_NULL;
+                } else {
+                    // 批量导入
+                    Boolean isSuccess = userService.insertBatch(userList);
+                    if (isSuccess) {
+                        flag = ExcelConstant.IMPORT_SUCCESS;
+                    } else {
+                        flag = ExcelConstant.IMPORT_ERROR;
+                    }
+                }
+            } catch (Exception e) {
+                //上传出错
+                flag = ExcelConstant.IMPORT_ERROR;
+                log.error("POI导入Excel异常{}", e.getMessage());
+            }
+        }
+        return flag;
     }
 }

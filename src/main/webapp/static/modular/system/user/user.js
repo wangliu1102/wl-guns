@@ -196,6 +196,98 @@ MgrUser.onClickDept = function (e, treeId, treeNode) {
     MgrUser.search();
 };
 
+/**
+ * POI下载模板
+ */
+MgrUser.downloadTemplatePoi = function(){
+    var $eleForm = $("<form method='get'></form>");
+    $eleForm.attr("action", Feng.ctxPath + "/static/用户信息导入模板.xlsx");
+    $(document.body).append($eleForm);
+    //提交表单，实现下载
+    $eleForm.submit();
+};
+
+/**
+ * POI导入
+ */
+MgrUser.importPoi = function(){
+    var index = layer.open({
+        type: 2,
+        title: '导入',
+        area: ['420px', '220px'], //宽高
+        fix: false, //不固定
+        maxmin: true,
+        content: Feng.ctxPath + '/mgr/importPoiExcel'
+    });
+    this.layerIndex = index;
+};
+
+/**
+ * POI导出
+ */
+MgrUser.exportPoi = function(){
+    var selected = $('#' + this.id).bootstrapTable('getData');
+    if (selected == null || selected == "" || selected.length == 0) {
+        layer.alert("数据为空，无法导出！");
+        return false;
+    }
+    var queryData = {};
+    queryData['beginTime'] = $("#beginTime").val().trim();
+    queryData['endTime'] = $("#endTime").val().trim();
+    queryData['name'] = $("#name").val().trim();
+
+    Feng.confirm("确定要导出查询的数据吗？", function () {
+        var index = layer.load(0, {shade: [0.3, '#f5f5f5']}); //0代表加载的风格，支持0-2
+
+        var result = httpPost(Feng.ctxPath + "/mgr/exportPoi?queryData=", queryData);
+        console.log(result);
+
+        /*定时器判断导出进度是否完成*/
+        var timer = setInterval(function () {
+            $.ajax({
+                url: Feng.ctxPath + "/mgr/isPoiExport",
+                type: "GET",
+                dataType: "json",
+                data: {},
+                success: function (data) {
+                    if (data.resultCode == 0) {
+                        layer.close(index);
+                        clearInterval(timer);
+                    }
+                },
+                error: function (e) {
+                    layer.close(index);
+                    console.log(e.responseText);
+                }
+            });
+        }, 1000);
+
+    });
+};
+
+/**
+ * 注解下载模板
+ */
+MgrUser.downloadTemplateAnnotation = function(){
+
+};
+
+/**
+ * 注解导入
+ */
+MgrUser.importAnnotation = function(){
+
+};
+
+/**
+ * 注解导出
+ */
+MgrUser.exportAnnotation = function(){
+
+};
+
+
+
 $(function () {
     var defaultColunms = MgrUser.initColumn();
     var table = new BSTable("managerTable", "/mgr/list", defaultColunms);

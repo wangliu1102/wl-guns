@@ -32,6 +32,7 @@ import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.JdkRegexpMethodPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.MultipartConfigElement;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -194,5 +197,21 @@ public class WebConfig implements WebMvcConfigurer {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
+    }
+
+    /**
+     * 指定文件上传的临时目录
+     * 如果不指定，linux会定期删除临时目录，导致上传文件失败
+     */
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory multipartConfigFactory = new MultipartConfigFactory();
+        String location = System.getProperty("user.dir") + "/data/tmp";
+        File file = new File(location);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        multipartConfigFactory.setLocation(location);
+        return multipartConfigFactory.createMultipartConfig();
     }
 }

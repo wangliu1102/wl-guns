@@ -63,6 +63,12 @@
 									@if(shiro.hasPermission("/mgr/setRole")){
 									<#button name="角色分配" icon="fa-user-secret" clickFun="MgrUser.roleAssign()" space="true"/>
 									@}
+									<#button name="POI下载模板" icon="fa-share" clickFun="MgrUser.downloadTemplatePoi()" space="true" />
+									<#button name="POI导入" icon="fa-reply" clickFun="MgrUser.importPoi()" space="true"/>
+									<#button name="POI导出" icon="fa-share" clickFun="MgrUser.exportPoi()" space="true"/>
+									<#button name="注解下载模板" icon="fa-share" clickFun="MgrUser.downloadTemplateAnnotation()" space="true" />
+									<#button name="注解导入" icon="fa-reply" clickFun="MgrUser.importAnnotation()" space="true"/>
+									<#button name="注解导出" icon="fa-share" clickFun="MgrUser.exportAnnotation()"/>
 								</div>
 								<#table id="managerTable"/>
 							</div>

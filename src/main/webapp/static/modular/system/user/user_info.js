@@ -271,6 +271,48 @@ function onBodyDown(event) {
     }
 }
 
+/**
+ * POI导入
+ */
+UserInfoDlg.importPoi = function () {
+    var formData = new FormData();
+    var name = $("#upfile").val();
+    formData.append("file", $("#upfile")[0].files[0]);
+    formData.append("name", name);
+    var suffix = name.substr(name.lastIndexOf('.') + 1);
+    if (suffix != "xlsx") {
+        layer.alert("文件格式必须是.xlsx");
+        return false;
+    }
+    var index = layer.load(0, {shade: [0.3, '#f5f5f5']}); //0代表加载的风格，支持0-2
+    $.ajax({
+        url: Feng.ctxPath + "/mgr/importPoi",
+        type: 'POST',
+        async: true,
+        data: formData,
+        // 告诉jQuery不要去处理发送的数据
+        processData: false,
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType: false,
+        success: function (responseStr) {
+            layer.close(index);
+            if (responseStr == "01") {
+                Feng.alert("导入成功！");
+                window.parent.MgrUser.table.refresh();
+                UserInfoDlg.close();
+            } else if (responseStr == "02") {
+                Feng.alert("导入失败！文件为空或者文件所有数据都与库中数据重复");
+            } else {
+                Feng.alert("导入失败！请联系系统管理员");
+            }
+        },
+        error: function (data) {
+            layer.close(index);
+            Feng.error("导入失败!" + data.responseJSON.message + "!");
+        }
+    });
+}
+
 $(function () {
     Feng.initValidator("userInfoForm", UserInfoDlg.validateFields);
 
