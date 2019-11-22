@@ -5,7 +5,7 @@
  * 上传按钮的id = 图片隐藏域id + 'BtnId'
  * 图片预览框的id = 图片隐藏域id + 'PreId'
  * 
- * @author fengshuonan
+ * @author 王柳
  */
 (function() {
 	

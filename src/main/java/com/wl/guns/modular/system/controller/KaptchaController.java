@@ -35,7 +35,7 @@ import java.io.IOException;
 /**
  * 验证码生成
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-05 23:10
  */
 @Controller
@@ -108,7 +108,7 @@ public class KaptchaController {
     /**
      * 返回图片
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/5/24 23:00
      */
     @RequestMapping("/{pictureId}")

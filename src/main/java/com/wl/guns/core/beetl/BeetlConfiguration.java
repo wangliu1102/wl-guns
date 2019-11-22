@@ -30,7 +30,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * beetl拓展配置,绑定一些工具类,方便在模板中直接调用
  *
- * @author stylefeng
+ * @author 王柳
  * @Date 2018/2/22 21:03
  */
 public class BeetlConfiguration extends BeetlGroupUtilConfiguration {

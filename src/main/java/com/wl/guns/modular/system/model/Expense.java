@@ -14,7 +14,7 @@ import java.util.Date;
  * 报销表
  * </p>
  *
- * @author stylefeng
+ * @author 王柳
  * @since 2017-12-05
  */
 @TableName("sys_expense")

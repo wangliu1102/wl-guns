@@ -25,7 +25,7 @@ import java.util.Date;
 /**
  * 日志对象创建工厂
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2016年12月6日 下午9:18:27
  */
 public class LogFactory {

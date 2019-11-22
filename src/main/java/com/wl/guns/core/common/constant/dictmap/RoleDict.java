@@ -20,7 +20,7 @@ import com.wl.guns.core.common.constant.dictmap.base.AbstractDictMap;
 /**
  * 角色的字典
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-06 15:01
  */
 public class RoleDict extends AbstractDictMap {

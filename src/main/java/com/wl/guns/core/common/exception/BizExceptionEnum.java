@@ -18,7 +18,7 @@ package com.wl.guns.core.common.exception;
 import cn.stylefeng.roses.kernel.model.exception.AbstractBaseExceptionEnum;
 
 /**
- * @author fengshuonan
+ * @author 王柳
  * @Description 所有业务异常的枚举
  * @date 2016年11月12日 下午5:04:51
  */

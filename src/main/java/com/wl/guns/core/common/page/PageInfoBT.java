@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 分页结果的封装(for Bootstrap Table)
  *
- * @author fengshuonan
+ * @author 王柳
  * @Date 2017年1月22日 下午11:06:41
  */
 public class PageInfoBT<T> {

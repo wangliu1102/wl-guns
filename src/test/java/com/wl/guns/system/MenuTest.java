@@ -14,7 +14,7 @@ import java.util.Stack;
 /**
  * 菜单测试
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-06-13 21:23
  */
 public class MenuTest extends BaseJunit {
@@ -25,7 +25,7 @@ public class MenuTest extends BaseJunit {
     /**
      * 初始化pcodes
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/6/13 21:24
      */
     @Test

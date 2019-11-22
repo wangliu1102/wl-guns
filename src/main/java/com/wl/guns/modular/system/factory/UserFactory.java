@@ -23,7 +23,7 @@ import org.springframework.beans.BeanUtils;
 /**
  * 用户创建工厂
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-05 22:43
  */
 public class UserFactory {

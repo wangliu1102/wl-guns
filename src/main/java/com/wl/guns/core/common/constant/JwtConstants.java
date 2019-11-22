@@ -18,7 +18,7 @@ package com.wl.guns.core.common.constant;
 /**
  * jwt相关配置
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-08-23 9:23
  */
 public interface JwtConstants {

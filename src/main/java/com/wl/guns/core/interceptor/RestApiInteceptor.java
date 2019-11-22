@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Rest Api接口鉴权
  *
- * @author stylefeng
+ * @author 王柳
  * @Date 2018/7/20 23:11
  */
 public class RestApiInteceptor extends HandlerInterceptorAdapter {

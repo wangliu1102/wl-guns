@@ -18,7 +18,7 @@ package com.wl.guns.core.common.constant.dictmap.base;
 /**
  * 系统相关的字典
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-06 15:48
  */
 public class SystemDict extends AbstractDictMap {

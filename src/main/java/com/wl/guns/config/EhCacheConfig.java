@@ -26,7 +26,7 @@ import org.springframework.core.io.ClassPathResource;
 /**
  * ehcache配置
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-20 23:11
  */
 @Configuration

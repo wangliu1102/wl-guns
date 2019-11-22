@@ -23,7 +23,7 @@ import java.lang.annotation.*;
 /**
  * 标记需要做业务日志的方法
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-03-31 12:46
  */
 @Inherited

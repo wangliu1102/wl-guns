@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * 部门服务
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-04-27 17:00
  */
 public interface IDeptService extends IService<Dept> {

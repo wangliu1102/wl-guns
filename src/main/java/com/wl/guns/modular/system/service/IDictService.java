@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * 字典服务
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-04-27 17:00
  */
 public interface IDictService extends IService<Dict> {

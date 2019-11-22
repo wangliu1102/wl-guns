@@ -15,7 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * 基础测试类
  *
- * @author stylefeng
+ * @author 王柳
  * @Date 2017/5/21 16:10
  */
 @RunWith(SpringRunner.class)

@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * 用户管理的包装类
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017年2月13日 下午10:47:03
  */
 public class UserWarpper extends BaseControllerWrapper {

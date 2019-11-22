@@ -18,7 +18,7 @@ package com.wl.guns.core.common.constant.cache;
 /**
  * 所有缓存名称的集合
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-04-24 21:56
  */
 public interface Cache {

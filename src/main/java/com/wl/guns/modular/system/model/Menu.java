@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 菜单表
  * </p>
  *
- * @author stylefeng
+ * @author 王柳
  * @since 2017-07-11
  */
 @TableName("sys_menu")

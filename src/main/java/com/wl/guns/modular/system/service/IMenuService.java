@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * 菜单服务
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-05 22:19
  */
 public interface IMenuService extends IService<Menu> {
@@ -34,7 +34,7 @@ public interface IMenuService extends IService<Menu> {
     /**
      * 删除菜单
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/5/5 22:20
      */
     void delMenu(Long menuId);
@@ -42,7 +42,7 @@ public interface IMenuService extends IService<Menu> {
     /**
      * 删除菜单包含所有子菜单
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/6/13 22:02
      */
     void delMenuContainSubMenus(Long menuId);

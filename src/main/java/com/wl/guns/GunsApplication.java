@@ -24,7 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * SpringBoot方式启动类
  *
- * @author stylefeng
+ * @author 王柳
  * @Date 2017/5/21 12:06
  */
 @SpringBootApplication(exclude = WebAutoConfiguration.class)

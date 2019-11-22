@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 常量生产工厂的接口
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-06-14 21:12
  */
 public interface IConstantFactory {
@@ -30,7 +30,7 @@ public interface IConstantFactory {
     /**
      * 根据用户id获取用户名称
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/5/9 23:41
      */
     String getUserNameById(Integer userId);
@@ -38,7 +38,7 @@ public interface IConstantFactory {
     /**
      * 根据用户id获取用户账号
      *
-     * @author stylefeng
+     * @author 王柳
      * @date 2017年5月16日21:55:371
      */
     String getUserAccountById(Integer userId);

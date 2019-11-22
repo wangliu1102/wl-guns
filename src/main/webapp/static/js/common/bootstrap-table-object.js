@@ -3,7 +3,7 @@
  *
  * 约定：toolbar的id为 (bstableId + "Toolbar")
  *
- * @author fengshuonan
+ * @author 王柳
  */
 (function () {
     var BSTable = function (bstableId, url, columns) {

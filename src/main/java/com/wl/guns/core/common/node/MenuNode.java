@@ -20,7 +20,7 @@ import cn.stylefeng.roses.kernel.model.enums.YesOrNotEnum;
 import java.util.*;
 
 /**
- * @author fengshuonan
+ * @author 王柳
  * @Description 菜单的节点
  * @date 2016年12月6日 上午11:34:17
  */

@@ -5,7 +5,7 @@ package com.wl.guns.multi.service;
  * 服务类
  * </p>
  *
- * @author fengshuonan
+ * @author 王柳
  * @since 2018-07-10
  */
 public interface TestService {
@@ -13,7 +13,7 @@ public interface TestService {
     /**
      * 测试多数据源的业务
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/6/23 23:02
      */
     void testBiz();
@@ -21,7 +21,7 @@ public interface TestService {
     /**
      * 测试多数据源的业务
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/6/23 23:02
      */
     void testGuns();

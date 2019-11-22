@@ -44,7 +44,7 @@ import static cn.stylefeng.roses.core.util.HttpContext.getIp;
 /**
  * 登录控制器
  *
- * @author fengshuonan
+ * @author 王柳
  * @Date 2017年1月10日 下午8:25:24
  */
 @Controller

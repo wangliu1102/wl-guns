@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 /**
  * 字典字段的包装器(从ConstantFactory中获取包装值)
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-06 15:12
  */
 public class DictFieldWarpperFactory {

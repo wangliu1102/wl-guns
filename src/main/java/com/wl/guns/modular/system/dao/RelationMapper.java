@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * 角色和菜单关联表 Mapper 接口
  * </p>
  *
- * @author stylefeng
+ * @author 王柳
  * @since 2017-07-11
  */
 public interface RelationMapper extends BaseMapper<Relation> {

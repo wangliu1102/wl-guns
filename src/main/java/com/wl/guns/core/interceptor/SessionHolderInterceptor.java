@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 /**
  * 静态调用session的拦截器
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2016年11月13日 下午10:15:42
  */
 @Aspect

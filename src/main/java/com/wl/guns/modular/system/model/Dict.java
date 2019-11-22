@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 字典表
  * </p>
  *
- * @author stylefeng
+ * @author 王柳
  * @since 2017-07-11
  */
 @TableName("sys_dict")

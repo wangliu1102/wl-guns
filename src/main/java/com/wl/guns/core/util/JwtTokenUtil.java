@@ -36,7 +36,7 @@ import java.util.Map;
  *         7. jti -- jwt唯一标识,防止重复使用
  * </pre>
  *
- * @author fengshuonan
+ * @author 王柳
  * @Date 2017/8/25 10:59
  */
 public class JwtTokenUtil {

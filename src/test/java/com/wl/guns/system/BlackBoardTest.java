@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * 首页通知展示测试
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-05-21 15:02
  */
 public class BlackBoardTest extends BaseJunit {

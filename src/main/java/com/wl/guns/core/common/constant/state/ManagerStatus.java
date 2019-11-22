@@ -18,7 +18,7 @@ package com.wl.guns.core.common.constant.state;
 /**
  * 管理员的状态
  *
- * @author fengshuonan
+ * @author 王柳
  * @Date 2017年1月10日 下午9:54:13
  */
 public enum ManagerStatus {

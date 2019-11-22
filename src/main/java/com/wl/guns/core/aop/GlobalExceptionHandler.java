@@ -43,7 +43,7 @@ import static cn.stylefeng.roses.core.util.HttpContext.getRequest;
 /**
  * 全局的的异常拦截器（拦截所有的控制器）（带有@RequestMapping注解的方法上都会拦截）
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2016年11月12日 下午3:19:56
  */
 @ControllerAdvice

@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * 角色相关业务
  *
- * @author fengshuonan
+ * @author 王柳
  * @Date 2017年1月10日 下午9:11:57
  */
 public interface IRoleService extends IService<Role> {
@@ -42,7 +42,7 @@ public interface IRoleService extends IService<Role> {
     /**
      * 删除角色
      *
-     * @author stylefeng
+     * @author 王柳
      * @Date 2017/5/5 22:24
      */
     void delRoleById(Integer roleId);

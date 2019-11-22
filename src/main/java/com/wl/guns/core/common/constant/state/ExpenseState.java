@@ -18,7 +18,7 @@ package com.wl.guns.core.common.constant.state;
 /**
  * 是否是菜单的枚举
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017年6月1日22:50:11
  */
 public enum ExpenseState {

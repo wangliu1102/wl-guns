@@ -26,7 +26,7 @@ import java.util.Map;
  * 通知表 服务类
  * </p>
  *
- * @author stylefeng123
+ * @author 王柳123
  * @since 2018-02-22
  */
 public interface INoticeService extends IService<Notice> {

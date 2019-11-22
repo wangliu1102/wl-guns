@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
 /**
  * 权限检查的aop
  *
- * @author fengshuonan
+ * @author 王柳
  * @date 2017-07-13 21:05
  */
 @Aspect

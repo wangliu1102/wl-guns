@@ -13,7 +13,7 @@ import java.util.Date;
  * 操作日志
  * </p>
  *
- * @author stylefeng
+ * @author 王柳
  * @since 2017-07-11
  */
 @TableName("sys_operation_log")
