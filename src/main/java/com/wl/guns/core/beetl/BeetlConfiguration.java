@@ -15,6 +15,8 @@
  */
 package com.wl.guns.core.beetl;
 
+import cn.stylefeng.roses.core.util.SpringContextHolder;
+import com.wl.guns.config.properties.GunsProperties;
 import com.wl.guns.core.tag.DictSelectorTag;
 import com.wl.guns.core.util.KaptchaUtil;
 import cn.stylefeng.roses.core.util.ToolUtil;
@@ -26,6 +28,8 @@ import org.springframework.core.env.Environment;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * beetl拓展配置,绑定一些工具类,方便在模板中直接调用
@@ -43,6 +47,12 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
 
     @Override
     public void initOther() {
+
+        //全局共享变量
+        Map<String, Object> shared = new HashMap<>();
+        shared.put("version", SpringContextHolder.getBean(GunsProperties.class).getVersion());
+        groupTemplate.setSharedVars(shared);
+
         groupTemplate.registerFunctionPackage("shiro", new ShiroExt());
         groupTemplate.registerFunctionPackage("tool", new ToolUtil());
         groupTemplate.registerFunctionPackage("kaptcha", new KaptchaUtil());

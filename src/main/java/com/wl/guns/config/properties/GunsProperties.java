@@ -49,6 +49,8 @@ public class GunsProperties {
 
     private Boolean springSessionOpen = false;
 
+    private String version = "1.0";
+
     /**
      * session 失效时间（默认为30分钟 单位：秒）
      */
