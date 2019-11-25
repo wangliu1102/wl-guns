@@ -15,6 +15,7 @@
  */
 package com.wl.guns.modular.system.service;
 
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import com.wl.guns.modular.system.model.User;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import com.baomidou.mybatisplus.service.IService;
@@ -76,4 +77,8 @@ public interface IUserService extends IService<User> {
      * @return
      */
     List<User> writeExelData(InputStream is);
+
+    List<User> selectUserList(User user);
+
+    ResponseData importUser(List<User> userList, boolean updateSupport);
 }

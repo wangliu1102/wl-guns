@@ -6,7 +6,7 @@ var MgrUser = {
     seItem: null,		//选中的条目
     table: null,
     layerIndex: -1,
-    deptid:0
+    deptid: 0
 };
 
 /**
@@ -99,7 +99,7 @@ MgrUser.roleAssign = function () {
 MgrUser.delMgrUser = function () {
     if (this.check()) {
 
-        var operation = function(){
+        var operation = function () {
             var userId = MgrUser.seItem.id;
             var ajax = new $ax(Feng.ctxPath + "/mgr/delete", function () {
                 Feng.success("删除成功!");
@@ -111,7 +111,7 @@ MgrUser.delMgrUser = function () {
             ajax.start();
         };
 
-        Feng.confirm("是否删除用户" + MgrUser.seItem.account + "?",operation);
+        Feng.confirm("是否删除用户" + MgrUser.seItem.account + "?", operation);
     }
 };
 
@@ -199,7 +199,7 @@ MgrUser.onClickDept = function (e, treeId, treeNode) {
 /**
  * POI下载模板
  */
-MgrUser.downloadTemplatePoi = function(){
+MgrUser.downloadTemplatePoi = function () {
     var $eleForm = $("<form method='get'></form>");
     $eleForm.attr("action", Feng.ctxPath + "/static/用户信息导入模板.xlsx");
     $(document.body).append($eleForm);
@@ -210,7 +210,7 @@ MgrUser.downloadTemplatePoi = function(){
 /**
  * POI导入
  */
-MgrUser.importPoi = function(){
+MgrUser.importPoi = function () {
     var index = layer.open({
         type: 2,
         title: '导入',
@@ -225,7 +225,7 @@ MgrUser.importPoi = function(){
 /**
  * POI导出
  */
-MgrUser.exportPoi = function(){
+MgrUser.exportPoi = function () {
     var selected = $('#' + this.id).bootstrapTable('getData');
     if (selected == null || selected == "" || selected.length == 0) {
         layer.alert("数据为空，无法导出！");
@@ -268,24 +268,75 @@ MgrUser.exportPoi = function(){
 /**
  * 注解下载模板
  */
-MgrUser.downloadTemplateAnnotation = function(){
-
+MgrUser.downloadTemplateAnnotation = function () {
+    //提交信息
+    var ajax = new $ax(Feng.ctxPath + "/mgr/downloadTemplateAnnotation", function (data) {
+        if (data.code == 200) {
+            window.location.href = Feng.ctxPath + "/common/download?fileName=" + encodeURI(data.data) + "&delete=" + true;
+        } else {
+            layer.alert("下载模板失败!" + data.message + "!");
+        }
+    }, function (data) {
+        layer.alert("下载模板失败!" + data.responseJSON.message + "!");
+    });
+    ajax.start();
 };
 
 /**
  * 注解导入
  */
-MgrUser.importAnnotation = function(){
-
+MgrUser.importAnnotation = function () {
+    var index = layer.open({
+        type: 2,
+        title: '导入',
+        area: ['420px', '220px'], //宽高
+        fix: false, //不固定
+        maxmin: true,
+        content: Feng.ctxPath + '/mgr/importAnnotationExcel'
+    });
+    this.layerIndex = index;
 };
 
 /**
  * 注解导出
  */
-MgrUser.exportAnnotation = function(){
+MgrUser.exportAnnotation = function () {
+    var selected = $('#' + this.id).bootstrapTable('getData');
+    if (selected == null || selected == "" || selected.length == 0) {
+        layer.alert("数据为空，无法导出！");
+        return false;
+    }
 
+    var user = {
+        beginTime: $("#beginTime").val().trim(),
+        endTime: $("#endTime").val().trim(),
+        name: $("#name").val().trim()
+    }
+
+    Feng.confirm("确定要导出查询的数据吗？", function () {
+        var index = layer.load(0, {shade: [0.3, '#f5f5f5']}); //0代表加载的风格，支持0-2
+        $.ajax({
+            url: Feng.ctxPath + "/mgr/exportAnnotation",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(user), // 注意这里，传递对象给后台，这里必须将对象进行序列化
+            contentType: 'application/json', // 注意这里，传递对象给后台，这里必须是 application/json
+            success: function (data) {
+                if (data.code == 200) {
+                    window.location.href = Feng.ctxPath + "/common/download?fileName=" + encodeURI(data.data) + "&delete=" + true;
+                } else {
+                    layer.alert("导出失败!" + data.message + "!");
+                }
+                layer.close(index);
+            },
+            error: function (e) {
+                layer.alert("导出失败!" + data.responseJSON.message + "!");
+                layer.close(index);
+            }
+        });
+
+    });
 };
-
 
 
 $(function () {

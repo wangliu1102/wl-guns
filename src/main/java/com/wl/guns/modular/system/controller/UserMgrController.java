@@ -33,7 +33,8 @@ import com.wl.guns.core.common.exception.BizExceptionEnum;
 import com.wl.guns.core.log.LogObjectHolder;
 import com.wl.guns.core.shiro.ShiroKit;
 import com.wl.guns.core.shiro.ShiroUser;
-import com.wl.guns.core.util.poi_excel.ExcelConstant;
+import com.wl.guns.core.util.annotationexcel.ExcelUtil;
+import com.wl.guns.core.util.poiexcel.ExcelConstant;
 import com.wl.guns.modular.system.factory.UserFactory;
 import com.wl.guns.modular.system.model.User;
 import com.wl.guns.modular.system.service.IUserService;
@@ -42,7 +43,6 @@ import com.wl.guns.modular.system.warpper.UserWarpper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -472,5 +472,66 @@ public class UserMgrController extends BaseController {
             }
         }
         return flag;
+    }
+
+    /**
+     * @description 注解导出
+     * @author 王柳
+     * @date 2019/11/25 10:22
+     * @params [user]
+     */
+    @RequestMapping("/exportAnnotation")
+    @ResponseBody
+    public Object exportAnnotation(@RequestBody User user) {
+        List<User> list = userService.selectUserList(user);
+        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        return util.exportExcel(list, "用户数据");
+    }
+
+    /**
+     * @description 注解下载模板
+     * @author 王柳
+     * @date 2019/11/25 11:36
+     * @params []
+     */
+    @RequestMapping("/downloadTemplateAnnotation")
+    @ResponseBody
+    public Object downloadTemplateAnnotation() {
+        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        return util.importTemplateExcel("用户数据");
+    }
+
+    /**
+     * 跳转到注解导入页面
+     */
+    @RequestMapping("/importAnnotationExcel")
+    public String importAnnotationExcel() {
+        return PREFIX + "user_import_annotation_excel.html";
+    }
+
+    /**
+     * @description 注解导入
+     * @author 王柳
+     * @date 2019/11/25 11:56
+     * @params [file, updateSupport]
+     */
+    @RequestMapping("/importAnnotation")
+    @ResponseBody
+    public Object importAnnotation(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtil<User> util = new ExcelUtil<User>(User.class);
+        List<User> userList = util.importExcel(file.getInputStream());
+        ResponseData responseData = userService.importUser(userList, updateSupport);
+        if (ResponseData.DEFAULT_SUCCESS_CODE.equals(responseData.getCode())) {
+            Map map = (Map) responseData.getData();
+            List<User> newUserList = (List<User>) map.get("new");
+            List<User> oldUserList = (List<User>) map.get("old");
+            if (newUserList.size() != 0) {
+                userService.insertBatch(newUserList);
+            }
+            if (oldUserList.size() != 0) {
+                userService.updateBatchById(oldUserList);
+            }
+        }
+        return responseData;
     }
 }

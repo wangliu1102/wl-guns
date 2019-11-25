@@ -1,0 +1,27 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <form method="POST">
+        <div class="ibox-content">
+            <div class="form-horizontal">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+                        &nbsp;	<input type="file" id="upfile" name="upfile" placeholder="选择需要导入的文件"/>
+                    </div>
+                </div>
+                <div class="row btn-group-m-t">
+                    <div class="col-sm-10">
+                        <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="UserInfoDlg.importAnnotation()"/>
+                        <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="UserInfoDlg.close()"/>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="${ctxPath}/static/modular/system/user/user_info.js"></script>
+
+@}

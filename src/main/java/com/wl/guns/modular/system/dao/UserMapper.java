@@ -74,4 +74,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @params [page, name, beginTime, endTime]
      */
     List<Map<String, Object>> selectPoiExport(Pagination page, @Param("name") String name, @Param("beginTime") String beginTime, @Param("endTime") String endTime);
+
+    List<User> selectUserList(User user);
 }

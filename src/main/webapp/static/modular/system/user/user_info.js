@@ -64,29 +64,29 @@ UserInfoDlg.clearData = function () {
  * @param val 数据的具体值
  */
 UserInfoDlg.set = function (key, value) {
-    if(typeof value == "undefined"){
-        if(typeof $("#" + key).val() =="undefined"){
-            var str="";
-            var ids="";
-            $("input[name='"+key+"']:checkbox").each(function(){
-                if(true == $(this).is(':checked')){
-                    str+=$(this).val()+",";
+    if (typeof value == "undefined") {
+        if (typeof $("#" + key).val() == "undefined") {
+            var str = "";
+            var ids = "";
+            $("input[name='" + key + "']:checkbox").each(function () {
+                if (true == $(this).is(':checked')) {
+                    str += $(this).val() + ",";
                 }
             });
-            if(str){
-                if(str.substr(str.length-1)== ','){
-                    ids = str.substr(0,str.length-1);
+            if (str) {
+                if (str.substr(str.length - 1) == ',') {
+                    ids = str.substr(0, str.length - 1);
                 }
-            }else{
-                $("input[name='"+key+"']:radio").each(function(){
-                    if(true == $(this).is(':checked')){
-                        ids=$(this).val()
+            } else {
+                $("input[name='" + key + "']:radio").each(function () {
+                    if (true == $(this).is(':checked')) {
+                        ids = $(this).val()
                     }
                 });
             }
             this.userInfoData[key] = ids;
-        }else{
-            this.userInfoData[key]= $("#" + key).val();
+        } else {
+            this.userInfoData[key] = $("#" + key).val();
         }
     }
 
@@ -266,7 +266,7 @@ UserInfoDlg.chPwd = function () {
 
 function onBodyDown(event) {
     if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
-            event.target).parents("#menuContent").length > 0)) {
+        event.target).parents("#menuContent").length > 0)) {
         UserInfoDlg.hideDeptSelectTree();
     }
 }
@@ -280,7 +280,7 @@ UserInfoDlg.importPoi = function () {
     formData.append("file", $("#upfile")[0].files[0]);
     formData.append("name", name);
     var suffix = name.substr(name.lastIndexOf('.') + 1);
-    if (suffix != "xlsx") {
+    if (suffix !== "xlsx") {
         layer.alert("文件格式必须是.xlsx");
         return false;
     }
@@ -296,19 +296,59 @@ UserInfoDlg.importPoi = function () {
         contentType: false,
         success: function (responseStr) {
             layer.close(index);
-            if (responseStr == "01") {
-                Feng.alert("导入成功！");
+            if (responseStr === "01") {
                 window.parent.MgrUser.table.refresh();
                 UserInfoDlg.close();
-            } else if (responseStr == "02") {
-                Feng.alert("导入失败！文件为空或者文件所有数据都与库中数据重复");
+                Feng.alert("导入成功！");
+            } else if (responseStr === "02") {
+                layer.alert("导入失败！文件为空或者文件所有数据都与库中数据重复");
             } else {
-                Feng.alert("导入失败！请联系系统管理员");
+                layer.alert("导入失败！请联系系统管理员");
             }
         },
         error: function (data) {
             layer.close(index);
-            Feng.error("导入失败!" + data.responseJSON.message + "!");
+            layer.alert("导入失败!" + data.responseJSON.message + "!");
+        }
+    });
+}
+
+/**
+ * 注解导入
+ */
+UserInfoDlg.importAnnotation = function () {
+    var formData = new FormData();
+    var name = $("#upfile").val();
+    formData.append("file", $("#upfile")[0].files[0]);
+    formData.append("updateSupport", $("input[name='updateSupport']").is(':checked'));
+    var suffix = name.substr(name.lastIndexOf('.') + 1);
+    if (suffix !== "xlsx" && suffix !== "xls") {
+        layer.alert("请选择后缀为 “xls”或“xlsx”的文件。");
+        return false;
+    }
+    var index = layer.load(0, {shade: [0.3, '#f5f5f5']}); //0代表加载的风格，支持0-2
+    $.ajax({
+        url: Feng.ctxPath + "/mgr/importAnnotation",
+        type: 'POST',
+        async: true,
+        data: formData,
+        // 告诉jQuery不要去处理发送的数据
+        processData: false,
+        // 告诉jQuery不要去设置Content-Type请求头
+        contentType: false,
+        success: function (data) {
+            layer.close(index);
+            if (data.code == 200) {
+                window.parent.MgrUser.table.refresh();
+                UserInfoDlg.close();
+                Feng.alert("导入成功！" + data.message + "!");
+            } else {
+                layer.alert("导入失败!" + data.message + "!");
+            }
+        },
+        error: function (data) {
+            layer.close(index);
+            layer.alert("导入失败!" + data.responseJSON.message + "!");
         }
     });
 }

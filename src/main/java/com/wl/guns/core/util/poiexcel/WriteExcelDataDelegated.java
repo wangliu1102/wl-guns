@@ -1,4 +1,4 @@
-package com.wl.guns.core.util.poi_excel;
+package com.wl.guns.core.util.poiexcel;
 
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 

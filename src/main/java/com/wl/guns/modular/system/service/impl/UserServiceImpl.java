@@ -16,27 +16,29 @@
 package com.wl.guns.modular.system.service.impl;
 
 import cn.stylefeng.roses.core.datascope.DataScope;
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.wl.guns.core.common.constant.state.ManagerStatus;
+import com.wl.guns.core.common.exception.BizExceptionEnum;
 import com.wl.guns.core.util.DateUtil;
-import com.wl.guns.core.util.poi_excel.PoiUtil;
-import com.wl.guns.core.util.poi_excel.WriteExcelDataDelegated;
+import com.wl.guns.core.util.annotationexcel.StringUtils;
+import com.wl.guns.core.util.poiexcel.PoiUtil;
+import com.wl.guns.core.util.poiexcel.WriteExcelDataDelegated;
 import com.wl.guns.modular.system.dao.UserMapper;
 import com.wl.guns.modular.system.model.User;
 import com.wl.guns.modular.system.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -91,11 +93,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 标题
         String[] titles = {"ID", "账号", "姓名", "性别", "生日", "部门", "邮箱", "电话", "创建时间", "状态"};
-
+        // 查询的sql对应的名称
         String[] datas = {"id", "account", "name", "sexName", "birthday", "deptName", "email", "phone", "createtime", "statusName"};
 
-
-        // 开始导入
+        // 开始导出
         PoiUtil.exportExcelToWebsite(start, request, response, totalRowCount, filaName, titles, new WriteExcelDataDelegated() {
             @Override
             public Boolean writeExcelData(SXSSFSheet eachSheet, Integer startRowCount, Integer endRowCount, Integer currentPage, Integer pageSize) throws Exception {
@@ -152,5 +153,60 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         return userList;
+    }
+
+    @Override
+    public List<User> selectUserList(User user) {
+        return baseMapper.selectUserList(user);
+    }
+
+    @Override
+    public ResponseData importUser(List<User> userList, boolean updateSupport) {
+        if (StringUtils.isNull(userList) || userList.size() == 0) {
+            throw new ServiceException(BizExceptionEnum.IMPORT_EXCEL_NULL);
+        }
+        int successNum = 0;
+        int failureNum = 0;
+        StringBuilder successMsg = new StringBuilder();
+        StringBuilder failureMsg = new StringBuilder();
+        List<User> newUserList = new ArrayList<>();
+        List<User> updateUserList = new ArrayList<>();
+        for (User user : userList) {
+            try {
+                // 验证是否存在这个用户
+                User u = baseMapper.getByAccount(user.getAccount());
+                if (StringUtils.isNull(u)) {
+                    user.setCreatetime(new Date());
+                    newUserList.add(user);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + user.getAccount() + " 导入成功");
+                } else if (updateSupport) {
+                    // 已存在的用户,要做更新
+                    user.setId(u.getId());
+                    user.setCreatetime(new Date());
+                    updateUserList.add(user);
+                    successNum++;
+                    successMsg.append("<br/>" + successNum + "、账号 " + user.getAccount() + " 更新成功");
+                } else {
+                    failureNum++;
+                    failureMsg.append("<br/>" + failureNum + "、账号 " + user.getAccount() + " 已存在");
+                }
+            } catch (Exception e) {
+                failureNum++;
+                String msg = "<br/>" + failureNum + "、账号 " + user.getAccount() + " 导入失败：";
+                failureMsg.append(msg + e.getMessage());
+                log.error(msg, e);
+            }
+        }
+        if (failureNum > 0) {
+            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
+            return ResponseData.error(failureMsg.toString());
+        } else {
+            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
+        }
+        Map map = new HashMap();
+        map.put("new", newUserList);
+        map.put("old", updateUserList);
+        return ResponseData.success(200, successMsg.toString(), map);
     }
 }

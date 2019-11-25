@@ -1,4 +1,4 @@
-package com.wl.guns.core.util.poi_excel;
+package com.wl.guns.core.util.poiexcel;
 
 /**
  * @description  EXCEL常量类

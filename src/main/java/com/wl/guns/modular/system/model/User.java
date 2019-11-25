@@ -1,9 +1,13 @@
 package com.wl.guns.modular.system.model;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.wl.guns.core.util.annotationexcel.Excel;
+import com.wl.guns.core.util.annotationexcel.Excels;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +21,7 @@ import java.util.Date;
  * @since 2017-07-11
  */
 @TableName("sys_user")
+@Data
 public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
@@ -24,6 +29,7 @@ public class User extends Model<User> {
     /**
      * 主键id
      */
+    @Excel(name = "用户序号", cellType = Excel.ColumnType.NUMERIC, prompt = "用户编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
@@ -33,6 +39,7 @@ public class User extends Model<User> {
     /**
      * 账号
      */
+    @Excel(name = "账号")
     private String account;
     /**
      * 密码
@@ -45,22 +52,27 @@ public class User extends Model<User> {
     /**
      * 名字
      */
+    @Excel(name = "用户名称")
     private String name;
     /**
      * 生日
      */
+    @Excel(name = "生日", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date birthday;
     /**
      * 性别（1：男 2：女）
      */
+    @Excel(name = "用户性别", readConverterExp = "1=男,2=女,3=未知")
     private Integer sex;
     /**
      * 电子邮件
      */
+    @Excel(name = "用户邮箱")
     private String email;
     /**
      * 电话
      */
+    @Excel(name = "手机号码")
     private String phone;
     /**
      * 角色id
@@ -69,164 +81,41 @@ public class User extends Model<User> {
     /**
      * 部门id
      */
+    @Excel(name = "部门编号", type = Excel.Type.IMPORT)
     private Integer deptid;
     /**
      * 状态(1：启用  2：冻结  3：删除）
      */
+    @Excel(name = "帐号状态", readConverterExp = "1=启用,2=冻结,3=删除")
     private Integer status;
     /**
      * 创建时间
      */
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
     private Date createtime;
     /**
      * 保留字段
      */
     private Integer version;
 
+    /**
+     * 部门对象, @TableField(exist = false):不在数据表中的字段
+     */
+    @Excels({
+            @Excel(name = "部门全称", targetAttr = "fullname", type = Excel.Type.EXPORT),
+            @Excel(name = "部门简称", targetAttr = "simplename", type = Excel.Type.EXPORT)
+    })
+    @TableField(exist = false)
+    private Dept dept;
 
-    public Integer getId() {
-        return id;
-    }
+    @TableField(exist = false)
+    private String beginTime;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getRoleid() {
-        return roleid;
-    }
-
-    public void setRoleid(String roleid) {
-        this.roleid = roleid;
-    }
-
-    public Integer getDeptid() {
-        return deptid;
-    }
-
-    public void setDeptid(Integer deptid) {
-        this.deptid = deptid;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+    @TableField(exist = false)
+    private String endTime;
 
     @Override
     protected Serializable pkVal() {
         return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", avatar=" + avatar +
-                ", account=" + account +
-                ", password=" + password +
-                ", salt=" + salt +
-                ", name=" + name +
-                ", birthday=" + birthday +
-                ", sex=" + sex +
-                ", email=" + email +
-                ", phone=" + phone +
-                ", roleid=" + roleid +
-                ", deptid=" + deptid +
-                ", status=" + status +
-                ", createtime=" + createtime +
-                ", version=" + version +
-                "}";
     }
 }

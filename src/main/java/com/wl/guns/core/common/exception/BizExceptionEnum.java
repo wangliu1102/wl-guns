@@ -69,10 +69,12 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
     REQUEST_NULL(400, "请求有错误"),
     SESSION_TIMEOUT(400, "会话超时"),
     SERVER_ERROR(500, "服务器异常"),
+    EXPORT_EXCEL_ERROR(500,"导出Excel失败，请联系网站管理员！"),
+    IMPORT_EXCEL_NULL(500, "导入数据不能为空！"),
 
-    /**
-     * token异常
-     */
+            /**
+             * token异常
+             */
     TOKEN_EXPIRED(700, "token过期"),
     TOKEN_ERROR(700, "token验证失败"),
 

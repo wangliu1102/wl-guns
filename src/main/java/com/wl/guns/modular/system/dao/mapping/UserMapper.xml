@@ -21,6 +21,36 @@
 		<result column="version" property="version" />
 	</resultMap>
 
+	<resultMap id="SysUserResult" type="com.wl.guns.modular.system.model.User">
+		<id column="id" property="id" />
+		<result column="avatar" property="avatar" />
+		<result column="account" property="account" />
+		<result column="password" property="password" />
+		<result column="salt" property="salt" />
+		<result column="name" property="name" />
+		<result column="birthday" property="birthday" />
+		<result column="sex" property="sex" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="roleid" property="roleid" />
+		<result column="deptid" property="deptid" />
+		<result column="status" property="status" />
+		<result column="createtime" property="createtime" />
+		<result column="version" property="version" />
+		<association property="dept"  column="deptid" javaType="com.wl.guns.modular.system.model.Dept" resultMap="deptResult" />
+	</resultMap>
+
+	<resultMap id="deptResult" type="com.wl.guns.modular.system.model.Dept">
+		<id column="id" property="id"/>
+		<result column="num" property="num"/>
+		<result column="pid" property="pid"/>
+		<result column="pids" property="pids"/>
+		<result column="simplename" property="simplename"/>
+		<result column="fullname" property="fullname"/>
+		<result column="tips" property="tips"/>
+		<result column="version" property="version"/>
+	</resultMap>
+
 	<sql id="Base_Column_List">
 		id, account, name, birthday, sex, email, avatar,
 		phone, roleid,
@@ -117,20 +147,54 @@
 		left join sys_dict n on n.code=a.status and n.pid = (select id from sys_dict where code ='account_state')
 		left join sys_dept d on d.id=a.deptid
 		<where>
-			status != 3
+			a.status != 3
 			<if test="name != null and name != ''">
-				and (phone like CONCAT('%',#{name},'%')
-				or account like CONCAT('%',#{name},'%')
-				or `name` like CONCAT('%',#{name},'%'))
+				and (a.phone like CONCAT('%',#{name},'%')
+				or a.account like CONCAT('%',#{name},'%')
+				or a.`name` like CONCAT('%',#{name},'%'))
 			</if>
 			<if test="beginTime != null and beginTime != ''">
-				and (createtime <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
+				and (a.createtime <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and (createtime <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
+				and (a.createtime <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
 			</if>
 		</where>
-		order by createtime desc
+		order by a.createtime desc
+	</select>
+
+	<select id="selectUserList" parameterType="com.wl.guns.modular.system.model.User" resultMap="SysUserResult">
+		select
+		a.id,
+		a.account,
+		a.name,
+		a.birthday,
+		a.sex,
+		a.email,
+		a.phone,
+		a.deptid,
+		d.fullname,
+		d.simplename,
+		a.status,
+		a.createtime,
+		a.version
+		from sys_user a
+		left join sys_dept d on d.id=a.deptid
+		<where>
+			a.status != 3
+			<if test="name != null and name != ''">
+				and (a.phone like CONCAT('%',#{name},'%')
+				or a.account like CONCAT('%',#{name},'%')
+				or a.`name` like CONCAT('%',#{name},'%'))
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+				and (a.createtime <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and (a.createtime <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
+			</if>
+		</where>
+		order by a.createtime desc
 	</select>
 
 </mapper>
