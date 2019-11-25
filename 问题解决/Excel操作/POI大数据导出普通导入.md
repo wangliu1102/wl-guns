@@ -1,6 +1,8 @@
 # 简介
 
-具体参考https://github.com/wangliu1102/wl-guns中的用户管理模块的POI导入、导出功能
+具体参考https://github.com/wangliu1102/wl-guns
+
+中的用户管理模块的POI导入、导出功能
 
 工具包在com.wl.guns.core.util.poiexcel路径下
 
