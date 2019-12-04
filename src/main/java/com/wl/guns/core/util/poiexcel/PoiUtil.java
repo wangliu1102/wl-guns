@@ -1,7 +1,8 @@
 package com.wl.guns.core.util.poiexcel;
 
-import cn.stylefeng.roses.core.util.ToolUtil;
-import com.wl.guns.core.util.DateUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -159,7 +160,7 @@ public class PoiUtil {
      */
     public static final void exportExcelToLocalPath(Integer start, Integer totalRowCount, String[] titles, String exportPath, WriteExcelDataDelegated writeExcelDataDelegated) throws Exception {
 
-        log.info("开始导出：" + DateUtil.getTime(new Date()));
+        log.info("开始导出：" + DateUtil.formatDateTime(new Date()));
         // 初始化EXCEL
         SXSSFWorkbook wb = PoiUtil.initExcel(totalRowCount, titles);
 
@@ -167,9 +168,9 @@ public class PoiUtil {
         if (isDownLoadExcel) {
             // 下载EXCEL
             PoiUtil.downLoadExcelToLocalPath(wb, exportPath);
-            log.info("导出完成：" + DateUtil.getTime(new Date()));
+            log.info("导出完成：" + DateUtil.formatDateTime(new Date()));
         } else {
-            log.info("无数据，不导出：" + DateUtil.getTime(new Date()));
+            log.info("无数据，不导出：" + DateUtil.formatDateTime(new Date()));
         }
 
     }
@@ -188,7 +189,7 @@ public class PoiUtil {
      */
     public static final void exportExcelToWebsite(Integer start, HttpServletRequest request, HttpServletResponse response, Integer totalRowCount, String fileName, String[] titles, WriteExcelDataDelegated writeExcelDataDelegated) throws Exception {
 
-        log.info("开始导出：" + DateUtil.getTime(new Date()));
+        log.info("开始导出：" + DateUtil.formatDateTime(new Date()));
 
         // 初始化EXCEL
         SXSSFWorkbook wb = PoiUtil.initExcel(totalRowCount, titles);
@@ -198,9 +199,9 @@ public class PoiUtil {
         if (isDownLoadExcel) {
             // 下载EXCEL
             PoiUtil.downLoadExcelToWebsite(wb, request, response, fileName);
-            log.info("导出完成：" + DateUtil.getTime(new Date()));
+            log.info("导出完成：" + DateUtil.formatDateTime(new Date()));
         } else {
-            log.info("无数据，不导出：" + DateUtil.getTime(new Date()));
+            log.info("无数据，不导出：" + DateUtil.formatDateTime(new Date()));
         }
 
     }
@@ -289,7 +290,7 @@ public class PoiUtil {
                         // 设置单元格样式会严重影响性能
 //                        cell.setCellStyle(getBodyStyle(eachSheet.getWorkbook()));
                         String value = objectToString(map.get(datas[j]));
-                        if (ToolUtil.isEmpty(value)) {
+                        if (StrUtil.isEmpty(value)) {
                             cell.setCellValue("");
                         } else {
                             cell.setCellValue(value);
@@ -331,7 +332,7 @@ public class PoiUtil {
             // yyyy-MM-dd
 //            return DateUtil.getDay((Date) o);
             // yyyy-MM-dd HH:mm:ss
-            return DateUtil.getTime((Date) o);
+            return DateUtil.formatDateTime((Date) o);
         } else {
             return "";
         }
@@ -469,7 +470,7 @@ public class PoiUtil {
      */
     private static String getCellFormatValue(XSSFCell cell) {
         String cellvalue = "";
-        if (ToolUtil.isNotEmpty(cell)) {
+        if (ObjectUtil.isNotNull(cell)) {
             // 判断当前Cell的Type
             switch (cell.getCellType()) {
                 case CELL_TYPE_NUMERIC:
@@ -478,7 +479,7 @@ public class PoiUtil {
                     if (HSSFDateUtil.isCellDateFormatted(cell)) {
                         Date date = cell.getDateCellValue();
                         //  yyyy-MM-dd hh:mm:ss
-                        cellvalue = DateUtil.getTime(date);
+                        cellvalue = DateUtil.formatDateTime(date);
                         //  yyyy-MM-dd
 //                        cellvalue = DateUtil.getDay(date);
                     } else {

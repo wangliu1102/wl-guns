@@ -3,7 +3,7 @@ package com.wl.guns.core.util.annotationexcel;
 /**
  * 字符串格式化
  *
- * @author ruoyi
+ * @author 王柳
  */
 public class StrFormatter
 {

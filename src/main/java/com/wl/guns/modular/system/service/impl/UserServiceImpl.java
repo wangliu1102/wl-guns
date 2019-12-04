@@ -15,6 +15,7 @@
  */
 package com.wl.guns.modular.system.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import cn.stylefeng.roses.core.datascope.DataScope;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
@@ -23,7 +24,6 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.wl.guns.core.common.constant.state.ManagerStatus;
 import com.wl.guns.core.common.exception.BizExceptionEnum;
-import com.wl.guns.core.util.DateUtil;
 import com.wl.guns.core.util.annotationexcel.StringUtils;
 import com.wl.guns.core.util.poiexcel.PoiUtil;
 import com.wl.guns.core.util.poiexcel.WriteExcelDataDelegated;
@@ -89,7 +89,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         Integer start = PoiUtil.getStart(totalRowCount);
 
         // 导出EXCEL文件名称
-        String filaName = "用户信息_" + DateUtil.getTime(new Date());
+        String filaName = "用户信息_" + DateUtil.formatDateTime(new Date());
 
         // 标题
         String[] titles = {"ID", "账号", "姓名", "性别", "生日", "部门", "邮箱", "电话", "创建时间", "状态"};
@@ -140,7 +140,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 user.setAccount(account);
                 user.setName(row.get(1));
                 user.setSex(Integer.valueOf(row.get(2)));
-                user.setBirthday(DateUtil.parseTime(row.get(3)));
+                user.setBirthday(DateUtil.parseDateTime(row.get(3)));
                 user.setDeptid(Integer.valueOf(row.get(4)));
                 user.setEmail(row.get(5));
                 user.setPhone(row.get(6));

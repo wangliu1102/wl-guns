@@ -1,7 +1,6 @@
 package com.wl.guns.modular.system.controller;
 
 import com.wl.guns.config.properties.GunsProperties;
-import com.wl.guns.core.util.DateUtil;
 import com.wl.guns.core.util.annotationexcel.FileUtils;
 import com.wl.guns.core.util.annotationexcel.StringUtils;
 import org.slf4j.Logger;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 通用请求处理
  *
- * @author ruoyi
+ * @author 王柳
  */
 @Controller
 public class FileDownloadController {
