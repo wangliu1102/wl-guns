@@ -12,6 +12,9 @@ guns:
   session-validation-interval: 900  #多久检测一次失效的session(只在单机环境下生效) 单位：秒
   version: @project.version@
 
+jobs:
+  testSchedule: 0/1 * * * * ?
+
 beetl:
   resource-auto-check: true       #热加载beetl模板，开发时候用
 

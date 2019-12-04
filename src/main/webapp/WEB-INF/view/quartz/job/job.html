@@ -1,0 +1,70 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>定时任务</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <#NameCon id="jobName" name="任务名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="invokeTarget" name="调用目标字符串" />
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                type="button">
+                                            任务分组
+                                        </button>
+                                    </div>
+                                    <select class="form-control" id="jobGroup">
+                                        <option value="">所有</option>
+                                        <option value="DEFAULT">默认</option>
+                                        <option value="SYSTEM">系统</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <div class="input-group-btn">
+                                        <button data-toggle="dropdown" class="btn btn-white dropdown-toggle"
+                                                type="button">
+                                            任务状态
+                                        </button>
+                                    </div>
+                                    <select class="form-control" id="status">
+                                        <option value="">所有</option>
+                                        <option value="0">正常</option>
+                                        <option value="1">暂停</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <#button name="搜索" icon="fa-search" clickFun="SysJob.search()"/>
+                                <#button name="重置" icon="fa-trash" clickFun="SysJob.resetSearch()" space="true"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="sysJobTableToolbar" role="group">
+                            <#button name="添加" icon="fa-plus" clickFun="SysJob.openAddSysJob()"/>
+                            <#button name="修改" icon="fa-edit" clickFun="SysJob.openEditSysJob()" space="true"/>
+                            <#button name="启用" icon="fa-check-circle" clickFun="SysJob.enableJob()" space="true"/>
+                            <#button name="暂停" icon="fa-warning" clickFun="SysJob.pauseJob()" space="true"/>
+                            <#button name="执行" icon="fa-play" clickFun="SysJob.runJob()" space="true"/>
+                            <#button name="删除" icon="fa-play" clickFun="SysJob.removeJob()" space="true"/>
+                            <#button name="查看详情" icon="fa-book" clickFun="SysJob.detail()" space="true"/>
+                        </div>
+                        <#table id="sysJobTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/quartz/job/job.js?v=${version}"></script>
+@}

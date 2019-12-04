@@ -214,3 +214,20 @@ function httpPost(URL, PARAMS) {
 
     return temp;
 }
+
+/**
+ * 为表格中单元格添加title提示
+ *
+ * @param value
+ * @param row
+ * @param index
+ * @returns {string}
+ */
+function setTitle(value, row, index) {
+    var tdValue = value;
+    if (value == "" || value == null){
+        tdValue = "-"
+    }
+    var html = '<div title="' + tdValue + '" style="width: 100%;" ><table style="table-layout: fixed"><td>' + tdValue + '</td></table></div>';
+    return html;
+}

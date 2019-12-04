@@ -1,0 +1,42 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="weeklyInfoForm">
+            <input type="hidden" id="id" value="${job.id}">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-sm-11">
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">任务编号:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.id}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">任务名称:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.jobName}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">任务分组:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${jobGroupName}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">调用目标字符串:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.invokeTarget}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">执行表达式:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.cronExpression}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">下次执行时间:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.nextValidTime,'yyyy-MM-dd HH:mm:ss'}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">任务状态:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${statusName}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">是否并发执行:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${concurrentName}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">执行策略:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${misfirePolicyName}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">创建时间:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.createTime,'yyyy-MM-dd HH:mm:ss'}</h5><br/>
+                            <h5 style="font:12px bolder 微软雅黑;font-weight: bold">备注:</h5>
+                            <h5 style="font:12px bolder 微软雅黑">${job.remark}</h5><br/>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/office/weekly/weekly_info.js?v=${version}"></script>
+@}
