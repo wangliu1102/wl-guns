@@ -1,0 +1,95 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" >
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">性别(单选)</label>
+                        <div class="col-sm-9">
+                            <select class="form-control chosen-select" id="sex1" name="sex1" tabindex="1" data-placeholder="请选择性别">
+                                <option value=""></option>
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">国家(多选)</label>
+                        <div class="col-sm-9">
+                            <select class="form-control chosen-select" id="country" name="country" tabindex="1" data-placeholder="请选择国家" multiple>
+                                <option value=""></option>
+                                <option value="1">中国</option>
+                                <option value="2">韩国</option>
+                                <option value="3">法国</option>
+                                <option value="4">日本</option>
+                                <option value="5">越南</option>
+                                <option value="6">缅甸</option>
+                                <option value="7">美国</option>
+                                <option value="8">加拿大</option>
+                            </select>
+                        </div>
+                    </div>
+                    <#dictSelector width="100%" id="sex" name ="sex" code="sys_sex" label="性别" underline="true" placeholder="-请选择-" />
+                    <#dictSelector width="100%" id="state" name ="state" code="sys_state" label="状态" underline="true" type="radio" value="1"/>
+                    <#dictSelector width="100%" id="account_state" name ="account_state" code="account_state" label="账号状态" underline="true" type="checkbox"  />
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">国家(多选)</label>
+                        <div class="col-sm-9">
+                            <select class='chosen' data-placeholder='请选择国家' multiple >
+                                <option value=""></option>
+                                <option value="China">中国</option>
+                                <option value="US">US</option>
+                                <option value="England">英国</option>
+                                <option value="Canada">加拿大</option>
+                                <option value="Cube">古巴</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">车子</label>
+                        <div class="col-sm-9">
+                            <select class='chosen'>
+                                <optgroup label="Swedish Cars">
+                                    <option value ="volvo">Volvo</option>
+                                    <option value ="saab">Saab</option>
+                                </optgroup>
+                                <optgroup label="German Cars">
+                                    <option value ="mercedes">Mercedes</option>
+                                    <option value ="audi">Audi</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">水果</label>
+                        <div class="col-sm-9">
+                            <select class='chosen2' >
+                                <option value=""></option>
+                                <option value="vegetable">西红柿 黄瓜 芹菜</option>
+                                <option value="fruit">葡萄 草莓 芭乐[潘石榴]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/test/chosen_test.js?v=${version}"></script>
+
+@}

@@ -1,0 +1,51 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户(静态)</label>
+                        <div class="col-sm-9">
+                            <select class="form-control selectpicker" data-style="btn-primary" id="name" name="name" data-live-search="true" title="请输入管理员" multiple>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">选项分组</label>
+                        <div class="col-sm-9">
+                            <select class="form-control selectpicker" data-live-search="true" title="请选择">
+                                <optgroup label="Picnic">
+                                    <option>Mustard</option>
+                                    <option>Ketchup</option>
+                                    <option>Relish</option>
+                                </optgroup>
+                                <optgroup label="Camping">
+                                    <option>Tent</option>
+                                    <option>Flashlight</option>
+                                    <option>Toilet Paper</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+
+                </div>
+                <div class="col-sm-6">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/test/bootstrap_select.js?v=${version}"></script>
+
+@}

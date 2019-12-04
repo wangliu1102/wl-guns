@@ -77,7 +77,7 @@ public class DictSelectorTag extends Tag {
         //disabled属性
         String disabled = ToolUtil.isNotEmpty(attrs.get("disabled")) ? attrs.get("disabled").toString() : "";
         //searchnum 下拉选项数量达到多少启用搜索,默认10
-        int searchnum = ToolUtil.isNum(attrs.get("searchnum")) ? Integer.parseInt(attrs.get("searchnum").toString()) : 10;
+        int searchnum = ToolUtil.isNum(attrs.get("searchnum")) ? Integer.parseInt(attrs.get("searchnum").toString()) : 0;
         //根据code查询字典数据
         List<Dict> list = iDictService.selectByParentCode(code);
 
