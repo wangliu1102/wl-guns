@@ -106,6 +106,21 @@ Menu.search = function () {
     Menu.table.refresh({query: queryData});
 }
 
+/**
+ * 展开/折叠
+ */
+var expandFlag;
+Menu.expandAllBtn = function () {
+    expandFlag =  expandFlag == null? true : expandFlag;
+    $('#' + this.id).bootstrapTreeTable("collapseAll");
+    if (!expandFlag) {
+        $('#' + this.id).bootstrapTreeTable('expandAll');
+    } else {
+        $('#' + this.id).bootstrapTreeTable('collapseAll');
+    }
+    expandFlag = expandFlag ? false: true;
+};
+
 $(function () {
     var defaultColunms = Menu.initColumn();
     var table = new BSTreeTable(Menu.id, "/menu/list", defaultColunms);

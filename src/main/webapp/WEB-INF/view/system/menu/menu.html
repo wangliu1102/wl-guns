@@ -29,6 +29,7 @@
                             @if(shiro.hasPermission("/menu/remove")){
                                 <#button name="删除" icon="fa-remove" clickFun="Menu.delMenu()" space="true"/>
                             @}
+                            <#button name="展开/折叠" icon="fa fa-exchange" clickFun="Menu.expandAllBtn()" space="true"/>
                         </div>
                         <#table id="menuTable"/>
                     </div>

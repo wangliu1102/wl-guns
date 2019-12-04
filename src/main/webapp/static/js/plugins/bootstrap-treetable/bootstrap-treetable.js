@@ -39,10 +39,12 @@ function extracted($, item, target, globalCollapsedFlag, options) {
     "use strict";
 
     $.fn.bootstrapTreeTable = function (options, param) {
+        var target = $(this).data('bootstrap.tree.table');
+        target = target ? target : $(this);
         var allData = null;//用于存放格式化后的数据
         // 如果是调用方法
         if (typeof options == 'string') {
-            return $.fn.bootstrapTreeTable.methods[options](this, param);
+            return $.fn.bootstrapTreeTable.methods[options](target, param);
         }
         // 如果是初始化组件
         options = $.extend({}, $.fn.bootstrapTreeTable.defaults, options || {});
@@ -158,6 +160,26 @@ function extracted($, item, target, globalCollapsedFlag, options) {
             });
             return tr;
         }
+
+        // 展开所有的行
+        target.expandAll=function() {
+            target.find("tbody").find("tr").find(".treetable-expander").each(function(i,n){
+                var _isCollapsed = $(n).hasClass(options.expanderCollapsedClass);
+                if (_isCollapsed) {
+                    $(n).trigger("click");
+                }
+            })
+        }
+        // 折叠所有的行
+        target.collapseAll=function() {
+            target.find("tbody").find("tr").find(".treetable-expander").each(function(i,n){
+                var _isExpanded = $(n).hasClass(options.expanderExpandedClass);
+                if (_isExpanded) {
+                    $(n).trigger("click");
+                }
+            })
+        }
+
         // 加载数据
         target.load = function (parms) {
             // 加载数据前先清空
@@ -283,7 +305,7 @@ function extracted($, item, target, globalCollapsedFlag, options) {
         } else {
             // 也可以通过defaults里面的data属性通过传递一个数据集合进来对组件进行初始化....有兴趣可以自己实现，思路和上述类似
         }
-
+        target.data('bootstrap.tree.table', target);
         return target;
     };
 
@@ -326,6 +348,14 @@ function extracted($, item, target, globalCollapsedFlag, options) {
             } else {
                 target.load();
             }
+        },
+        // 展开所有的行
+        expandAll: function(target) {
+            target.expandAll();
+        },
+        // 折叠所有的行
+        collapseAll: function(target) {
+            target.collapseAll();
         },
         // 组件的其他方法也可以进行类似封装........
     };
