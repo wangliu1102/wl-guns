@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ import java.io.Serializable;
  * @since 2017-07-11
  */
 @TableName("sys_role")
+@Data
 public class Role extends Model<Role> {
 
     private static final long serialVersionUID = 1L;
@@ -50,78 +52,19 @@ public class Role extends Model<Role> {
      */
     private Integer version;
 
+    /**
+     * 角色权限字符
+     */
+    private String roleKey;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getDeptid() {
-        return deptid;
-    }
-
-    public void setDeptid(Integer deptid) {
-        this.deptid = deptid;
-    }
-
-    public String getTips() {
-        return tips;
-    }
-
-    public void setTips(String tips) {
-        this.tips = tips;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
+    /**
+     * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限 5:仅本人数据权限）
+     */
+    private String dataScope;
 
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
 
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", num=" + num +
-                ", pid=" + pid +
-                ", name=" + name +
-                ", deptid=" + deptid +
-                ", tips=" + tips +
-                ", version=" + version +
-                "}";
-    }
 }

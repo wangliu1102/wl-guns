@@ -15,6 +15,10 @@
  */
 package com.wl.guns.modular.system.controller;
 
+import cn.stylefeng.roses.core.base.controller.BaseController;
+import cn.stylefeng.roses.core.reqres.response.ResponseData;
+import cn.stylefeng.roses.core.util.ToolUtil;
+import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.wl.guns.core.common.annotion.BussinessLog;
 import com.wl.guns.core.common.annotion.Permission;
 import com.wl.guns.core.common.constant.Const;
@@ -30,10 +34,6 @@ import com.wl.guns.modular.system.model.User;
 import com.wl.guns.modular.system.service.IRoleService;
 import com.wl.guns.modular.system.service.IUserService;
 import com.wl.guns.modular.system.warpper.RoleWarpper;
-import cn.stylefeng.roses.core.base.controller.BaseController;
-import cn.stylefeng.roses.core.reqres.response.ResponseData;
-import cn.stylefeng.roses.core.util.ToolUtil;
-import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -238,5 +238,42 @@ public class RoleController extends BaseController {
             return this.roleService.roleTreeListByRoleId(strArray);
         }
     }
+
+    /**
+     * 跳转到数据分配
+     */
+    @RequestMapping(value = "/role_DateAuthority/{roleId}")
+    public String roleDateAuthority(@PathVariable("roleId") Integer roleId, Model model) {
+        if (ToolUtil.isOneEmpty(roleId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        Role role = roleService.selectById(roleId);
+        if (ToolUtil.isNotEmpty(role)) {
+            model.addAttribute("role", role);
+        } else {
+            model.addAttribute("role", new Role());
+        }
+        return PREFIX + "/role_DateAuthority.html";
+    }
+
+    /**
+     * 数据权限
+     */
+    @RequestMapping("/DateAuthority")
+    @ResponseBody
+    public ResponseData DateAuthority(@RequestParam("roleId") Integer roleId, @RequestParam("deptIds") String deptIds, @RequestParam("dataScope") String dataScope) {
+        if (ToolUtil.isOneEmpty(roleId)) {
+            throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
+        }
+        Role role = new Role().selectById(roleId);
+        role.setDataScope(dataScope);
+        this.roleService.updateById(role);
+        if (ToolUtil.isNotEmpty(deptIds)) {
+            this.roleService.DateAuthority(roleId, deptIds);
+        }
+        return SUCCESS_TIP;
+
+    }
+
 
 }

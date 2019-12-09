@@ -29,6 +29,7 @@
                             @if(shiro.hasPermission("/role/setAuthority")){
                                 <#button name="权限配置" icon="fa-user-secret" clickFun="Role.assign()" space="true"/>
                             @}
+                            <#button name="数据权限" icon="fa fa-check-square-o" clickFun="Role.dateAuthority()" space="true"/>
                         </div>
                         <#table id="roleTable"/>
                     </div>

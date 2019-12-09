@@ -79,4 +79,9 @@ public interface IRoleService extends IService<Role> {
      * @date 2017年2月18日 上午10:32:04
      */
     List<ZTreeNode> roleTreeListByRoleId(String[] roleId);
+
+    /**
+     * 设置角色的数据权限
+     */
+    void DateAuthority(Integer roleId, String deptIds);
 }

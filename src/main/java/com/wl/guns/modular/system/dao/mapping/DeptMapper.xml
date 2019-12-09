@@ -34,4 +34,21 @@
         order by num ASC
     </select>
 
+    <select id="deptTreeListByRoleId" resultType="com.wl.guns.core.common.node.ZTreeNode">
+        SELECT d1.id as id,pid as pId,( CASE WHEN (d1.id = 0 OR d1.id IS NULL) THEN 0 ELSE d1.id END ) AS
+        pId,d1.simplename
+        AS NAME, ( CASE WHEN (d1.id = 0 OR d1.id IS NULL) THEN 'true' ELSE 'false' END ) as isOpen,( CASE WHEN (d2.id =
+        0 OR d2.id IS NULL) THEN 'false' ELSE 'true' END ) "checked"
+        FROM sys_dept d1
+        LEFT join (select id FROM sys_dept WHERE id in
+        <foreach collection="list" index="index" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+        ) d2 on d1.id=d2.id
+    </select>
+    <select id="getDeptIdsByRoleId" resultType="java.lang.Integer">
+         select dept_id menuId from
+         sys_role_dept where role_id = #{roleId}
+    </select>
+
 </mapper>

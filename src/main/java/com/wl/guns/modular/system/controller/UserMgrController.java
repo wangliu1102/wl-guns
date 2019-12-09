@@ -181,15 +181,9 @@ public class UserMgrController extends BaseController {
     @RequestMapping("/list")
     @Permission
     @ResponseBody
-    public Object list(@RequestParam(required = false) String name, @RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime, @RequestParam(required = false) Integer deptid) {
-        if (ShiroKit.isAdmin()) {
-            List<Map<String, Object>> users = userService.selectUsers(null, name, beginTime, endTime, deptid);
-            return new UserWarpper(users).wrap();
-        } else {
-            DataScope dataScope = new DataScope(ShiroKit.getDeptDataScope());
-            List<Map<String, Object>> users = userService.selectUsers(dataScope, name, beginTime, endTime, deptid);
-            return new UserWarpper(users).wrap();
-        }
+    public Object list(User user) {
+        List<Map<String, Object>> users = userService.selectUsers(user);
+        return new UserWarpper(users).wrap();
     }
 
     /**

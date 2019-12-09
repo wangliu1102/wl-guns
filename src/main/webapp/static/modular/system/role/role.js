@@ -108,6 +108,23 @@ Role.assign = function () {
 };
 
 /**
+ * 数据权限
+ */
+Role.dateAuthority = function () {
+    if (this.check()) {
+        var index = layer.open({
+            type: 2,
+            title: '数据权限',
+            area: ['75%', '75%'], //宽高
+            fix: false, //不固定
+            maxmin: true,
+            content: Feng.ctxPath + '/role/role_DateAuthority/' + this.seItem.id
+        });
+        this.layerIndex = index;
+    }
+};
+
+/**
  * 搜索角色
  */
 Role.search = function () {

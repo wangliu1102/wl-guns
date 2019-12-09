@@ -65,4 +65,14 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     public List<Map<String, Object>> list(String condition) {
         return this.baseMapper.list(condition);
     }
+
+    @Override
+    public List<Integer> getDeptIdsByRoleId(Integer roleId) {
+        return deptMapper.getDeptIdsByRoleId(roleId);
+    }
+
+    @Override
+    public List<ZTreeNode> deptTreeListByRoleId(List<Integer> deptIds) {
+        return deptMapper.deptTreeListByRoleId(deptIds);
+    }
 }

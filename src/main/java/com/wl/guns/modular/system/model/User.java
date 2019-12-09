@@ -1,10 +1,7 @@
 package com.wl.guns.modular.system.model;
 
-import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
 import com.wl.guns.core.util.annotationexcel.Excel;
 import com.wl.guns.core.util.annotationexcel.Excels;
 import lombok.Data;
@@ -22,16 +19,10 @@ import java.util.Date;
  */
 @TableName("sys_user")
 @Data
-public class User extends Model<User> {
+public class User extends BaseModel<User> {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键id
-     */
-    @Excel(name = "用户序号", cellType = Excel.ColumnType.NUMERIC, prompt = "用户编号")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
     /**
      * 头像
      */
@@ -88,11 +79,7 @@ public class User extends Model<User> {
      */
     @Excel(name = "帐号状态", readConverterExp = "1=启用,2=冻结,3=删除")
     private Integer status;
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Excel.Type.EXPORT)
-    private Date createtime;
+
     /**
      * 保留字段
      */

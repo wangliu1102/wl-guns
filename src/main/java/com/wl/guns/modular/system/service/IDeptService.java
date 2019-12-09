@@ -44,4 +44,14 @@ public interface IDeptService extends IService<Dept> {
      * 获取所有部门列表
      */
     List<Map<String, Object>> list(String condition);
+
+    /**
+     * 根据条件查询部门
+     */
+    List<Integer> getDeptIdsByRoleId(Integer roleId);
+
+    /**
+     * 获取ztree的节点列表
+     */
+    List<ZTreeNode> deptTreeListByRoleId(List<Integer> deptIds);
 }

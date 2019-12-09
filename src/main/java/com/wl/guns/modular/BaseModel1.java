@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public abstract class BaseModel<T extends BaseModel> extends Model<T> implements Serializable {
+public abstract class BaseModel1<T extends BaseModel1> extends Model<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

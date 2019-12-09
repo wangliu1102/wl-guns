@@ -17,7 +17,7 @@
 		<result column="roleid" property="roleid" />
 		<result column="deptid" property="deptid" />
 		<result column="status" property="status" />
-		<result column="createtime" property="createtime" />
+		<result column="create_time" property="createTime" />
 		<result column="version" property="version" />
 	</resultMap>
 
@@ -35,7 +35,7 @@
 		<result column="roleid" property="roleid" />
 		<result column="deptid" property="deptid" />
 		<result column="status" property="status" />
-		<result column="createtime" property="createtime" />
+		<result column="create_time" property="createTime" />
 		<result column="version" property="version" />
 		<association property="dept"  column="deptid" javaType="com.wl.guns.modular.system.model.Dept" resultMap="deptResult" />
 	</resultMap>
@@ -55,20 +55,28 @@
 		id, account, name, birthday, sex, email, avatar,
 		phone, roleid,
 		deptid, status,
-		createtime, version
+		create_time as createtime, version
 	</sql>
 
 	<sql id="Base_Column_List_With_Pwd">
 		id, account, name, birthday,password, sex, email, avatar,
 		phone, roleid,salt,
 		deptid, status,
-		createtime, version
+		create_time as createtime, version
 	</sql>
 
+	<!--数据权限查询基类-->
+	<sql id="selectUserVo">
+      select 	u.id, u.account, u.name, u.birthday,u.password, u.sex, u.email, u.avatar,
+		u.phone, u.roleid ,u.salt,
+		u.deptid ,
+		u.create_time AS createtime, u.create_by AS createBy, u.update_time AS updateTime, u.update_by AS updateBy
+        from sys_user u
+	    left join sys_dept d on u.deptid = d.id
+    </sql>
+
 	<select id="selectUsers" resultType="map">
-		select
-		<include refid="Base_Column_List" />
-		from sys_user
+		<include refid="selectUserVo" />
 		where status != 3
 		<if test="name != null and name != ''">
 			and (phone like CONCAT('%',#{name},'%')
@@ -79,11 +87,13 @@
 			and (deptid = #{deptid} or deptid in ( select id from sys_dept where pids like CONCAT('%[', #{deptid}, ']%') ))
 		</if>
 		<if test="beginTime != null and beginTime != ''">
-			and (createtime &gt;= CONCAT(#{beginTime},' 00:00:00'))
+			and (create_time &gt;= CONCAT(#{beginTime},' 00:00:00'))
 		</if>
 		<if test="endTime != null and endTime != ''">
-			and (createtime &lt;=  CONCAT(#{endTime},' 23:59:59'))
+			and (create_time &lt;=  CONCAT(#{endTime},' 23:59:59'))
 		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
 	</select>
 
 	<update id="setStatus">
@@ -118,10 +128,10 @@
 				or `name` like CONCAT('%',#{name},'%'))
 			</if>
 			<if test="beginTime != null and beginTime != ''">
-				and (createtime <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
+				and (create_time <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and (createtime <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
+				and (create_time <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
 			</if>
 		</where>
 	</select>
@@ -140,7 +150,7 @@
 		d.fullname as deptName,
 		a.status,
 		n.name as statusName,
-		a.createtime,
+		a.create_time as createtime,
 		a.version
 		from sys_user a
 		left join sys_dict m on m.code=a.sex and m.pid = (select id from sys_dict where code ='sys_sex')
@@ -154,13 +164,13 @@
 				or a.`name` like CONCAT('%',#{name},'%'))
 			</if>
 			<if test="beginTime != null and beginTime != ''">
-				and (a.createtime <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
+				and (a.create_time <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and (a.createtime <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
+				and (a.create_time <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
 			</if>
 		</where>
-		order by a.createtime desc
+		order by a.create_time desc
 	</select>
 
 	<select id="selectUserList" parameterType="com.wl.guns.modular.system.model.User" resultMap="SysUserResult">
@@ -176,7 +186,7 @@
 		d.fullname,
 		d.simplename,
 		a.status,
-		a.createtime,
+		a.create_time as createtime,
 		a.version
 		from sys_user a
 		left join sys_dept d on d.id=a.deptid
@@ -188,13 +198,13 @@
 				or a.`name` like CONCAT('%',#{name},'%'))
 			</if>
 			<if test="beginTime != null and beginTime != ''">
-				and (a.createtime <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
+				and (a.create_time <![CDATA[>= ]]> CONCAT(#{beginTime},' 00:00:00'))
 			</if>
 			<if test="endTime != null and endTime != ''">
-				and (a.createtime <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
+				and (a.create_time <![CDATA[<= ]]>  CONCAT(#{endTime},' 23:59:59'))
 			</if>
 		</where>
-		order by a.createtime desc
+		order by a.create_time desc
 	</select>
 
 </mapper>

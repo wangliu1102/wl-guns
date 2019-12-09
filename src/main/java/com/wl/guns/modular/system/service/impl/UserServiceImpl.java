@@ -16,12 +16,12 @@
 package com.wl.guns.modular.system.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import cn.stylefeng.roses.core.datascope.DataScope;
 import cn.stylefeng.roses.core.reqres.response.ResponseData;
 import cn.stylefeng.roses.kernel.model.exception.ServiceException;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.wl.guns.core.common.annotion.DataScope;
 import com.wl.guns.core.common.constant.state.ManagerStatus;
 import com.wl.guns.core.common.exception.BizExceptionEnum;
 import com.wl.guns.core.util.annotationexcel.StringUtils;
@@ -33,7 +33,6 @@ import com.wl.guns.modular.system.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,8 +62,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public List<Map<String, Object>> selectUsers(DataScope dataScope, String name, String beginTime, String endTime, Integer deptid) {
-        return this.baseMapper.selectUsers(dataScope, name, beginTime, endTime, deptid);
+    @DataScope(deptAlias = "d", userAlias = "u")
+    public List<Map<String, Object>> selectUsers(User user) {
+        return this.baseMapper.selectUsers(user);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 user.setEmail(row.get(5));
                 user.setPhone(row.get(6));
                 user.setStatus(Integer.valueOf(row.get(7)));
-                user.setCreatetime(new Date());
+                user.setCreateTime(new Date());
 
                 userList.add(user);
 
@@ -176,14 +176,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 // 验证是否存在这个用户
                 User u = baseMapper.getByAccount(user.getAccount());
                 if (StringUtils.isNull(u)) {
-                    user.setCreatetime(new Date());
+                    user.setCreateTime(new Date());
                     newUserList.add(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getAccount() + " 导入成功");
                 } else if (updateSupport) {
                     // 已存在的用户,要做更新
                     user.setId(u.getId());
-                    user.setCreatetime(new Date());
+                    user.setCreateTime(new Date());
                     updateUserList.add(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getAccount() + " 更新成功");

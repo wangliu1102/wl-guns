@@ -26,6 +26,13 @@ var RolInfoDlg = {
                     message: '父级名称不能为空'
                 }
             }
+        },
+        roleKey:{
+            validators: {
+                notEmpty: {
+                    message: '权限字符不能为空'
+                }
+            }
         }
     }
 };
@@ -118,7 +125,7 @@ RolInfoDlg.showPNameSelectTree = function () {
  * 收集数据
  */
 RolInfoDlg.collectData = function () {
-    this.set('id').set('name').set('pid').set('deptid').set('tips').set('num');
+    this.set('id').set('name').set('pid').set('deptid').set('tips').set('num').set('roleKey');
 };
 
 /**

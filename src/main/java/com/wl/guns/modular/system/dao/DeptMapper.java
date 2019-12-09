@@ -43,4 +43,7 @@ public interface DeptMapper extends BaseMapper<Dept> {
      */
     List<Map<String, Object>> list(@Param("condition") String condition);
 
+    List<Integer> getDeptIdsByRoleId(Integer roleId);
+
+    List<ZTreeNode> deptTreeListByRoleId(List<Integer> deptIds);
 }

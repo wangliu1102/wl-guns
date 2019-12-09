@@ -164,6 +164,23 @@ public class DeptController extends BaseController {
         return SUCCESS_TIP;
     }
 
+    /**
+     * 获取部门的tree列表
+     */
+    @RequestMapping(value = "/deptTreeListByRoleId/{roleId}")
+    @ResponseBody
+    public List<ZTreeNode> deptTreeListByRoleId(@PathVariable Integer roleId) {
+        List<Integer> deptIdsByRoleId = this.deptService.getDeptIdsByRoleId(roleId);
+        List<ZTreeNode> tree;
+        if (ToolUtil.isNotEmpty(deptIdsByRoleId)) {
+            tree = this.deptService.deptTreeListByRoleId(deptIdsByRoleId);
+        } else {
+            tree = this.deptService.tree();
+        }
+        tree.add(ZTreeNode.createParent());
+        return tree;
+    }
+
     private void deptSetPids(Dept dept) {
         if (ToolUtil.isEmpty(dept.getPid()) || dept.getPid().equals(0)) {
             dept.setPid(0);

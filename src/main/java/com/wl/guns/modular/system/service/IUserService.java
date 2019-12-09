@@ -49,7 +49,7 @@ public interface IUserService extends IService<User> {
     /**
      * 根据条件查询用户列表
      */
-    List<Map<String, Object>> selectUsers(DataScope dataScope, String name, String beginTime, String endTime, Integer deptid);
+    List<Map<String, Object>> selectUsers(User user);
 
     /**
      * 设置用户的角色

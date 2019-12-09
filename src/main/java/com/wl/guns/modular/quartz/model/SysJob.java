@@ -1,7 +1,7 @@
 package com.wl.guns.modular.quartz.model;
 
 import cn.hutool.core.util.StrUtil;
-import com.wl.guns.modular.BaseModel;
+import com.wl.guns.modular.BaseModel1;
 import com.wl.guns.modular.quartz.constant.ScheduleConstants;
 import com.wl.guns.modular.quartz.util.CronUtils;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.Date;
  * @date 2019/11/26 10:01
  */
 @Data
-public class SysJob extends BaseModel<SysJob> {
+public class SysJob extends BaseModel1<SysJob> {
 
     private static final long serialVersionUID = 1L;
 

@@ -16,17 +16,21 @@
 package com.wl.guns.modular.system.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import cn.stylefeng.roses.core.util.ToolUtil;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.wl.guns.core.common.node.ZTreeNode;
+import com.wl.guns.modular.system.dao.DeptRoleMapper;
 import com.wl.guns.modular.system.dao.RelationMapper;
 import com.wl.guns.modular.system.dao.RoleMapper;
+import com.wl.guns.modular.system.model.DeptRole;
 import com.wl.guns.modular.system.model.Relation;
 import com.wl.guns.modular.system.model.Role;
 import com.wl.guns.modular.system.service.IRoleService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +48,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
     @Resource
     private RelationMapper relationMapper;
+
+    @Resource
+    private DeptRoleMapper deptRoleMapper;
 
     @Override
     @Transactional
@@ -89,6 +96,23 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     public List<ZTreeNode> roleTreeListByRoleId(String[] roleId) {
         return this.baseMapper.roleTreeListByRoleId(roleId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void DateAuthority(Integer roleId, String deptIds) {
+        deptRoleMapper.delDeptRoleByRoleId(roleId);
+        List<DeptRole> deptRoles = new ArrayList<>();
+        //添加新的数据权限
+        for (Integer id : Convert.toIntArray(deptIds.split(","))) {
+            DeptRole deptRole = new DeptRole();
+            deptRole.setRoleId(roleId);
+            deptRole.setDeptId(id);
+            deptRoles.add(deptRole);
+        }
+        if (ToolUtil.isNotEmpty(deptRoles)) {
+            deptRoleMapper.insertBatch(deptRoles);
+        }
     }
 
 }
