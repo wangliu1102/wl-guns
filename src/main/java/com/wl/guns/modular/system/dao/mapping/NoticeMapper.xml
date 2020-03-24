@@ -8,16 +8,87 @@
         <result column="title" property="title"/>
         <result column="type" property="type"/>
         <result column="content" property="content"/>
-        <result column="createtime" property="createtime"/>
-        <result column="creater" property="creater"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+    </resultMap>
+
+    <resultMap id="simpleMap" type="com.wl.guns.modular.system.vo.NoticeVO">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="deptName" property="deptName"/>
+        <result column="createTime" property="createTime"/>
+        <result column="creator" property="creator"/>
+        <result column="simple_des" property="simpleDes"/>
     </resultMap>
 
     <select id="list" resultType="map">
-        select * from sys_notice
-        <if test="condition != null and condition != ''">
-            where title like CONCAT('%',#{condition},'%') or content like CONCAT('%',#{condition},'%')
-        </if>
-        order by createtime DESC
+        select
+        n.id AS id,
+        n.title AS title,
+        n.content AS content,
+        d.fullname AS deptName,
+        n.create_time AS createTime,
+        u.name AS creator,
+        n.simple_des AS simpleDes
+        from sys_notice n
+        left join sys_user u on n.create_by = u.id
+        left join sys_dept d on n.dept_id = d.id
+        <where>
+            <if test="title != null and title != ''">
+                n.title like CONCAT('%',#{title},'%')
+            </if>
+            <if test="content != null and content != ''">
+                or n.content like CONCAT('%',#{content},'%')
+            </if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+        order by n.create_time desc
     </select>
+
+    <select id="getSimpleList" resultMap="simpleMap">
+        select
+        n.id ,
+        n.title,
+        n.content,
+        d.fullname AS deptName,
+        DATE_FORMAT(n.create_time,'%Y/%m/%d') AS createTime,
+        u.name AS creator,
+        n.simple_des
+        from sys_notice n
+        left join sys_user u on n.create_by = u.id
+        left join sys_dept d on n.dept_id = d.id
+        <where>
+            ${sql}
+        </where>
+        order by n.create_time desc
+    </select>
+
+    <select id="getDetail" resultMap="simpleMap">
+        select
+        n.id ,
+        n.title,
+        n.content,
+        d.fullname AS deptName,
+        DATE_FORMAT(n.create_time,'%Y-%m-%d %H:%i:%S') AS createTime,
+        u.name AS creator,
+        n.simple_des
+        from sys_notice n
+        left join sys_user u on n.create_by = u.id
+        left join sys_dept d on n.dept_id = d.id
+        <where>
+            <if test="query != null and query != ''">
+                n.id = #{query}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertReturnId" parameterType="com.wl.guns.modular.system.model.Notice"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sys_notice(title,`type`,content,dept_id,simple_des,file_name,create_time,create_by,update_time,update_by)
+        values(#{title},#{type},#{content},#{deptId},#{simpleDes},#{fileName},#{createTime},#{createBy},#{updateTime},#{updateBy})
+    </insert>
 
 </mapper>

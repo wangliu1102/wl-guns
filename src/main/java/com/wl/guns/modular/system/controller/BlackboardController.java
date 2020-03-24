@@ -15,8 +15,9 @@
  */
 package com.wl.guns.modular.system.controller;
 
-import com.wl.guns.modular.system.service.INoticeService;
 import cn.stylefeng.roses.core.base.controller.BaseController;
+import com.wl.guns.modular.system.model.Notice;
+import com.wl.guns.modular.system.service.INoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +44,7 @@ public class BlackboardController extends BaseController {
      */
     @RequestMapping("")
     public String blackboard(Model model) {
-        List<Map<String, Object>> notices = noticeService.list(null);
+        List<Map<String, Object>> notices = noticeService.list(new Notice());
         model.addAttribute("noticeList", notices);
         return "/blackboard.html";
     }

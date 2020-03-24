@@ -1,115 +1,46 @@
 package com.wl.guns.modular.system.model;
 
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
-
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Data;
 
 /**
  * <p>
- * 通知表
+ * 信息发布表
  * </p>
  *
- * @author 王柳
- * @since 2017-07-11
+ * @author zx
+ * @since 2020-02-15
  */
+@Data
 @TableName("sys_notice")
-public class Notice extends Model<Notice> {
-
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+public class Notice extends BaseModel<Notice> {
     /**
      * 标题
      */
     private String title;
+
     /**
      * 类型
      */
     private Integer type;
+
     /**
      * 内容
      */
     private String content;
+
     /**
-     * 创建时间
+     * 机构id
      */
-    private Date createtime;
+    private String deptId;
+
     /**
-     * 创建人
+     * 简介
      */
-    private Integer creater;
+    private String simpleDes;
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
-    }
-
-    public Integer getCreater() {
-        return creater;
-    }
-
-    public void setCreater(Integer creater) {
-        this.creater = creater;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "Notice{" +
-                "id=" + id +
-                ", title=" + title +
-                ", type=" + type +
-                ", content=" + content +
-                ", createtime=" + createtime +
-                ", creater=" + creater +
-                "}";
-    }
+    /**
+     * 真实文件名
+     */
+    private String fileName;
 }

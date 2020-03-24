@@ -48,4 +48,9 @@ public interface Const {
      */
     String API_MENU_NAME = "接口文档";
 
+    /**
+     * 系统默认的域名
+     */
+    String DEFAULT_DOMAIN = "https://www.huishu.ltd";
+
 }

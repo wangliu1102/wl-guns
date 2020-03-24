@@ -9,6 +9,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -199,6 +200,25 @@ public class FileUtils {
                 }
             }
         }
+    }
+
+    public static void createDirectory(File myfile) {
+        if (!myfile.getParentFile().exists()) {
+            myfile.getParentFile().mkdirs();
+        }
+    }
+
+    public static boolean deleteNoticeFile(List<String> pathFileNames, String uploadDir) {
+        File deFile;
+        for (String pathName : pathFileNames) {
+            deFile = new File(uploadDir + pathName);
+            if (deFile.isFile() && deFile.exists()) {
+                if (!deFile.delete()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
 

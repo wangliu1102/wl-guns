@@ -4,7 +4,7 @@
         <div class="form-horizontal" id="noticeInfoForm">
 
             <input type="hidden" id="id" value="${notice.id}">
-            <input type="hidden" id="contentVal" value='${notice.content}'>
+            <textarea style="display: none" id="contentVal" >${notice.content}</textarea>
 
             <div class="row">
                 <div class="col-sm-12">
@@ -16,15 +16,46 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-1 control-label">简介</label>
+                        <div class="col-sm-11">
+                            <textarea rows="3" cols="22" class="form-control" id="simpleDes" name="simpleDes" type="text">${notice.simpleDes}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">文件名</label>
+                        <div class="col-sm-11">
+                            <input class="form-control" id="fileName" name="fileName" type="text" disabled value="${notice.fileName}" placeholder="请上传pdf,doc,docx,xls,xlsx,ppt,pptx格式的文件">
+
+                        </div>
+                    </div>
+
+                    <input id="file" type="file" underline="true" style="display: none" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+                           multiple onchange="NoticeInfoDlg.changeFile()"/>
+
+                    <div style="margin-bottom: 45px">
+                        <div style="float: right;">
+                            <#button name="上传文件" icon="fa-upload" clickFun="NoticeInfoDlg.uploadFile()" space="true" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
                         <label class="col-sm-1 control-label">内容</label>
                         <div class="col-sm-11">
                             <div id="editor" class="editorHeight">
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <label class="col-sm-1 control-label"></label>
+                        <div class="col-sm-11 ">
+                            <span style="color: red;">
+                                注意：请使用内容编辑器来调整文本样式，不要直接复制粘贴word等文档的内容
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            <div hidden id="myDiv"></div>
             <div class="row btn-group-m-t">
                 <div class="col-sm-10">
                     <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NoticeInfoDlg.editSubmit()"/>
@@ -35,5 +66,6 @@
     </div>
 </div>
 <script type="text/javascript" src="${ctxPath}/static/js/plugins/wangEditor/wangEditor.js?v=${version}"></script>
+<script type="text/javascript" src="${ctxPath}/static/js/plugins/wangEditor/wangEditor-fullscreen-plugin.js?v=${version}"></script>
 <script src="${ctxPath}/static/modular/system/notice/notice_info.js?v=${version}"></script>
 @}

@@ -15,6 +15,7 @@
  */
 package com.wl.guns.modular.system.controller;
 
+import com.wl.guns.StartupRunner;
 import com.wl.guns.core.common.annotion.BussinessLog;
 import com.wl.guns.core.common.annotion.Permission;
 import com.wl.guns.core.common.constant.Const;
@@ -54,6 +55,8 @@ public class DictController extends BaseController {
 
     @Autowired
     private IDictService dictService;
+    @Autowired
+    private StartupRunner startupRunner;
 
     /**
      * 跳转到字典管理首页
@@ -99,6 +102,7 @@ public class DictController extends BaseController {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         this.dictService.addDict(dictCode, dictName, dictTips, dictValues);
+        startupRunner.flushDictionary();
         return SUCCESS_TIP;
     }
 
@@ -135,6 +139,7 @@ public class DictController extends BaseController {
             throw new ServiceException(BizExceptionEnum.REQUEST_NULL);
         }
         dictService.editDict(dictId, dictCode, dictName, dictTips, dictValues);
+        startupRunner.flushDictionary();
         return SUCCESS_TIP;
     }
 
@@ -151,6 +156,7 @@ public class DictController extends BaseController {
         LogObjectHolder.me().set(ConstantFactory.me().getDictName(dictId));
 
         this.dictService.delteDict(dictId);
+        startupRunner.flushDictionary();
         return SUCCESS_TIP;
     }
 

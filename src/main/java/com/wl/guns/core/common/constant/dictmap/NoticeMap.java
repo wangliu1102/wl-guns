@@ -29,6 +29,7 @@ public class NoticeMap extends AbstractDictMap {
     public void init() {
         put("title", "标题");
         put("content", "内容");
+        put("notice", "信息");
     }
 
     @Override
